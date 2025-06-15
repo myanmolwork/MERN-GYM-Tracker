@@ -1,32 +1,33 @@
 import React, { useState } from 'react';
-
-import '../AddWorkout.css'
+import '../AddWorkout.css';
 import API from '../utils/api';
 
 const AddWorkout = () => {
   const [date, setDate] = useState('');
   const [exercises, setExercises] = useState([
-    {
-      name: '',
-      notes: '',
-      sets: [{ reps: '', weight: '' }]
-    }
+    { name: '', notes: '', sets: [{ reps: '', weight: '' }] }
   ]);
 
   const handleExerciseChange = (index, field, value) => {
     const updated = [...exercises];
-    updated[index][field] = value;
+    updated[index] = { ...updated[index], [field]: value };
     setExercises(updated);
   };
 
   const handleSetChange = (exerciseIndex, setIndex, field, value) => {
     const updated = [...exercises];
-    updated[exerciseIndex].sets[setIndex][field] = value;
+    updated[exerciseIndex].sets[setIndex] = {
+      ...updated[exerciseIndex].sets[setIndex],
+      [field]: value
+    };
     setExercises(updated);
   };
 
   const addExercise = () => {
-    setExercises([...exercises, { name: '', notes: '', sets: [{ reps: '', weight: '' }] }]);
+    setExercises([
+      ...exercises,
+      { name: '', notes: '', sets: [{ reps: '', weight: '' }] }
+    ]);
   };
 
   const addSet = (exerciseIndex) => {
@@ -36,12 +37,13 @@ const AddWorkout = () => {
   };
 
   const removeExercise = (index) => {
-    const updated = exercises.filter((_, i) => i !== index);
-    setExercises(updated);
+    if (exercises.length === 1) return; // Prevent removing the last exercise
+    setExercises(exercises.filter((_, i) => i !== index));
   };
 
   const removeSet = (exerciseIndex, setIndex) => {
     const updated = [...exercises];
+    if (updated[exerciseIndex].sets.length === 1) return; // Prevent removing the last set
     updated[exerciseIndex].sets = updated[exerciseIndex].sets.filter((_, i) => i !== setIndex);
     setExercises(updated);
   };
@@ -50,7 +52,16 @@ const AddWorkout = () => {
     e.preventDefault();
 
     try {
-      await API.post('/workouts', { date, exercises });
+      // Parse reps and weight to numbers before sending
+      const cleanedExercises = exercises.map(ex => ({
+        ...ex,
+        sets: ex.sets.map(set => ({
+          reps: Number(set.reps),
+          weight: Number(set.weight)
+        }))
+      }));
+
+      await API.post('/workouts', { date, exercises: cleanedExercises });
       alert('✅ Workout added successfully!');
       setDate('');
       setExercises([{ name: '', notes: '', sets: [{ reps: '', weight: '' }] }]);
@@ -65,7 +76,6 @@ const AddWorkout = () => {
       <h2 className="text-center text-glow dashboard-heading mb-4">📝 Add Your Workout</h2>
 
       <form onSubmit={handleSubmit} className="p-4 card-3d shadow rounded-4 bg-dark text-light">
-
         <div className="mb-4">
           <label className="form-label fw-semibold">📅 Workout Date & Time:</label>
           <input
@@ -79,7 +89,6 @@ const AddWorkout = () => {
 
         {exercises.map((exercise, exerciseIndex) => (
           <div key={exerciseIndex} className="border p-4 mb-4 rounded bg-black text-light shadow-sm">
-
             <div className="d-flex justify-content-between align-items-center mb-3">
               <h5 className="m-0">🏋️ Exercise {exerciseIndex + 1}</h5>
               <button
@@ -126,6 +135,7 @@ const AddWorkout = () => {
                         handleSetChange(exerciseIndex, setIndex, 'reps', e.target.value)
                       }
                       required
+                      min="1"
                     />
                   </div>
                   <div className="col-md-5">
@@ -138,6 +148,7 @@ const AddWorkout = () => {
                         handleSetChange(exerciseIndex, setIndex, 'weight', e.target.value)
                       }
                       required
+                      min="0"
                     />
                   </div>
                   <div className="col-md-2">

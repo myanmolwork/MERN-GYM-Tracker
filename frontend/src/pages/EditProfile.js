@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
- // ✅ make sure this path is correct
 import { useNavigate } from 'react-router-dom';
 import API from '../utils/api';
 
@@ -30,7 +29,7 @@ const EditProfile = () => {
       }
 
       try {
-        const { data } = await API.get('/profile'); // ✅ no need to add headers
+        const { data } = await API.get('/profile');
         setFormData({
           name: data.name || '',
           age: data.age?.toString() || '',
@@ -52,6 +51,7 @@ const EditProfile = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
+    // Prevent invalid input for number fields
     if (['age', 'height', 'weight', 'goalWeight'].includes(name) && value !== '') {
       if (!/^\d+$/.test(value)) return;
     }
@@ -85,7 +85,7 @@ const EditProfile = () => {
         goalWeight: Number(formData.goalWeight),
       };
 
-      const { data } = await API.put('/profile', payload); // ✅ no headers needed
+      const { data } = await API.put('/profile', payload);
       setMessage(data.msg || '✅ Profile updated!');
       setTimeout(() => navigate('/dashboard'), 1500);
     } catch (err) {

@@ -10,7 +10,7 @@ const BodyweightHistory = () => {
 
   useEffect(() => {
     const fetchLogs = async () => {
-
+      setLoading(true); // Ensure loading is true before fetching
       try {
         const response = await API.get('/bodyweights');
         const sorted = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -33,9 +33,14 @@ const BodyweightHistory = () => {
         <h2 className="text-center mb-4">📋 Bodyweight Logs</h2>
 
         {loading && <div className="text-center">⏳ Loading...</div>}
-        {error && <div className="alert alert-danger text-center">{error}</div>}
 
-        {!loading && logs.length === 0 && (
+        {error && (
+          <div className="alert alert-danger text-center" role="alert">
+            {error}
+          </div>
+        )}
+
+        {!loading && logs.length === 0 && !error && (
           <p className="text-center text-muted">No bodyweight logs found.</p>
         )}
 
@@ -52,11 +57,11 @@ const BodyweightHistory = () => {
               </thead>
               <tbody>
                 {logs.map((log, index) => (
-                  <tr key={log._id}>
+                  <tr key={log._id || index}>
                     <td>{index + 1}</td>
                     <td>{new Date(log.date).toLocaleDateString()}</td>
                     <td>{log.weight}</td>
-                    <td>{log.note || <span className="text-muted">-</span>}</td>
+                    <td>{log.note?.trim() ? log.note : <span className="text-muted">-</span>}</td>
                   </tr>
                 ))}
               </tbody>
