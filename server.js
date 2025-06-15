@@ -1,5 +1,5 @@
 // Load environment variables at the top
-require('dotenv').config();
+
 
 const express = require('express');
 const cors = require('cors');
@@ -18,7 +18,11 @@ const app = express();
 connectDB();
 
 // ✅ Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://mern-gym-tracker.vercel.app', // ✅ your deployed frontend
+  credentials: true
+}));
+
 app.use(express.json());
 
 // ✅ API Routes
