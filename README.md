@@ -1,53 +1,53 @@
 # 🏋️‍♂️ MERN Gym Tracker
 
-Track your workouts, monitor your bodyweight, set fitness goals, and visualize progress — all in one place!  
-Built with the MERN Stack (MongoDB, Express, React, Node.js) and JWT authentication.
+Track your workouts, monitor your bodyweight, set fitness goals, and visualize your fitness journey — all in one place!  
+Built with the MERN Stack (MongoDB, Express, React, Node.js) and secured using JWT authentication.
 
 ---
 
 ## 🔗 Live Demo
 
-[🌐 Click here to view the live site](https://github.com/myanmolwork/MERN-GYM-Tracker)
+🌐 [View the Live Site](https://mern-gym-tracker.vercel.app)
 
 ---
 
 ## 📸 Screenshots
 
-> Add screenshots here once your frontend is live
+> (Add screenshots here once the frontend is fully live and styled)
 
 ---
 
 ## ⚙️ Features
 
-- 📝 **Workout Logging** – Track exercises, sets, reps, and weight  
-- ⚖️ **Bodyweight Tracking** – Log your weight daily/weekly and view progress  
-- 🎯 **Fitness Goals** – Set monthly or weekly goals and see completion %  
-- 📊 **Progress Dashboard** – Visualize your body stats and workout volume using charts  
-- 👤 **Profile Management** – Edit personal info and set fitness targets  
-- 🔐 **JWT Authentication** – Secure login/signup and protected routes  
+- 📝 **Workout Logging** – Track multiple exercises, sets, reps, and weights  
+- ⚖️ **Bodyweight Tracking** – Log your weight and view progress over time  
+- 🎯 **Fitness Goals** – Set weekly/monthly goals and monitor achievement  
+- 📊 **Progress Dashboard** – Interactive charts for bodyweight and workout trends  
+- 👤 **Profile Management** – Edit your name, height, age, and fitness preferences  
+- 🔐 **JWT Authentication** – Secure login/signup with protected routes  
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Frontend:
+### 🔹 Frontend:
 - React  
-- Bootstrap + CSS  
-- Chart.js or Recharts (for graphs)  
-- React Router  
+- Bootstrap + Custom CSS  
+- Recharts (for graphs)  
+- React Router DOM  
 
-### Backend:
+### 🔹 Backend:
 - Node.js  
 - Express.js  
-- MongoDB (with Mongoose)  
-- JWT Authentication  
-- RESTful APIs  
+- MongoDB (via Mongoose)  
+- JWT for Authentication  
+- RESTful API structure  
 
 ---
 
-## 🚀 Getting Started (for local setup)
+## 🚀 Getting Started (Local Setup)
 
-### 1. Clone the repo
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/myanmolwork/MERN-GYM-Tracker.git

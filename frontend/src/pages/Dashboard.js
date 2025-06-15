@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 import '../Dashboard.css';
+import API from '../utils/api';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -10,30 +11,23 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) return navigate('/login');
+  const token = localStorage.getItem('token');
+  if (!token) return navigate('/login');
 
-    const fetchProfile = async () => {
-      try {
-        const res = await fetch('http://localhost:5000/api/profile', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  const fetchProfile = async () => {
+    try {
+      const res = await API.get('/profile'); // Axios auto adds baseURL and Authorization
+      setProfile(res.data);
+    } catch (error) {
+      console.error('Fetch profile error:', error);
+      navigate('/login');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        if (!res.ok) throw new Error('Failed to fetch profile');
-        const data = await res.json();
-        setProfile(data);
-      } catch (error) {
-        console.error(error);
-        navigate('/login');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProfile();
-  }, [navigate]);
+  fetchProfile();
+}, [navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -95,7 +89,7 @@ const Dashboard = () => {
   const bmiStatus = getBMIStatus(bmi);
   const bmiColor = getBMIColor(bmiStatus);
   const goalProgress = calculateGoalProgress();
-
+console.log('API URL:', process.env.REACT_APP_API_URL);
   return (
     <div className="container py-5 mainBody">
       {/* Header */}
