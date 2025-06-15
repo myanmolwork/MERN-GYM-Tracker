@@ -1,0 +1,68 @@
+/* ---------- DASHBOARD-SPECIFIC STYLING ---------- */
+
+.mainBody {
+  background-color: rgba(0, 0, 0, 0.6); /* Slight transparency */
+  padding: 2rem;
+  border-radius: 1.5rem;
+  backdrop-filter: blur(10px); /* Soft background blur */
+   margin: 2rem auto;
+  max-width: 1200px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5); /* Depth effect */
+}
+.dashboard-heading {
+  font-size: 2.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-align: center;
+  color: #00ffff;
+  letter-spacing: 2px;
+  position: relative;
+}
+
+.text-glow {
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.8),
+               0 0 20px rgba(0, 255, 255, 0.6),
+               0 0 30px rgba(0, 255, 255, 0.4);
+}
+
+.emoji {
+  font-size: 2.2rem;
+  margin-right: 0.5rem;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
+}
+
+.head-sub {
+  color: #ffffff;
+  font-size: 1rem;
+  text-shadow: none;
+}
+
+/* Card 3D effect */
+.card-3d {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  box-shadow: 0 0 12px rgba(133, 147, 147, 0.2), 0 8px 20px rgba(172, 66, 66, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: rgb(30, 30, 30);
+}
+
+.card-3d:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 0 24px rgba(0, 255, 255, 0.4), 0 12px 30px rgba(0, 0, 0, 0.8);
+}
+
+/* Goal and chart sections */
+.card.white-box {
+  background: #ffffff !important;
+  color: #222 !important;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.card.white-box h5,
+.card.white-box p,
+.card.white-box span {
+  color: #222 !important;
+}

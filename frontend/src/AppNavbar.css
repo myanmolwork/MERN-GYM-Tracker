@@ -1,0 +1,54 @@
+/* 🌌 NAVBAR BASE */
+.custom-navbar {
+  background: rgba(20, 20, 20, 0.7); /* Semi-transparent dark glass */
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+}
+
+/* 🌟 BRAND LOGO */
+.brand-glow {
+  font-weight: bold;
+  font-size: 1.6rem;
+  color: #ffa500 !important; /* Gym Orange */
+  text-shadow: 0 0 6px #ffa500, 0 0 10px #ffcc70;
+  transition: transform 0.2s ease, text-shadow 0.2s ease;
+}
+
+.brand-glow:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 10px #ffa500, 0 0 14px #ffcc70;
+}
+
+/* 🧭 NAV LINKS */
+.custom-navbar .nav-link {
+  color: #f0f0f0 !important;
+  margin-right: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.custom-navbar .nav-link:hover {
+  color: #ffa500 !important;
+  text-shadow: 0 0 5px #ffa500;
+  transform: scale(1.05);
+}
+
+/* 🎯 BUTTONS (Logout, Login) */
+.nav-btn {
+  border-color: #ffa500;
+  color: #ffa500;
+  background: transparent;
+  border-radius: 20px;
+  padding: 6px 18px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.nav-btn:hover {
+  background-color: #ffa500;
+  color: #fff;
+  box-shadow: 0 0 10px #ffa500, 0 0 15px #ffcc70;
+}
