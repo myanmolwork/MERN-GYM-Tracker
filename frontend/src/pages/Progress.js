@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Line, Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 import '../Dashboard.css';
+import API from '../utils/api';
 
 const Progress = () => {
   const navigate = useNavigate();
@@ -11,62 +12,40 @@ const Progress = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) return navigate('/login');
-
+useEffect(() => {
     const fetchProgress = async () => {
-      try {
-        const [weightRes, workoutRes, profileRes] = await Promise.all([
-          fetch('/api/bodyweights', {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          fetch('/api/workouts/stats', {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          fetch('/api/profile', {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-        ]);
+    try {
+      const [weightRes, workoutRes, profileRes] = await Promise.all([
+        API.get('/bodyweights'),
+        API.get('/workouts/stats'),
+        API.get('/profile'),
+      ]);
 
-        // Handle bodyweight response
-        if (weightRes.ok) {
-          const weights = await weightRes.json();
-          console.log('Weight logs:', weights);
-          setWeightLogs(weights.slice(-6));
-        } else {
-          const errorText = await weightRes.text();
-          console.warn('Weight API error:', errorText);
-        }
+      // ✅ Bodyweight logs (sorted & sliced last 6)
+      const weights = weightRes.data;
+      console.log('Weight logs:', weights);
+      const sortedWeights = weights.sort((a, b) => new Date(a.date) - new Date(b.date));
+      setWeightLogs(sortedWeights.slice(-6));
 
-        // Handle workout stats
-        if (workoutRes.ok) {
-          const workouts = await workoutRes.json();
-          console.log('Workout stats:', workouts);
-          setWorkoutStats(workouts);
-        } else {
-          const errorText = await workoutRes.text();
-          console.warn('Workout stats error:', errorText);
-        }
+      // ✅ Workout stats
+      const workouts = workoutRes.data;
+      console.log('Workout stats:', workouts);
+      setWorkoutStats(workouts);
 
-        // Handle profile
-        if (profileRes.ok) {
-          const data = await profileRes.json();
-          console.log('Profile:', data);
-          setProfile(data);
-        } else {
-          const errorText = await profileRes.text();
-          console.warn('Profile error:', errorText);
-        }
-      } catch (err) {
-        console.error('Error fetching progress data:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
+      // ✅ Profile
+      const profileData = profileRes.data;
+      console.log('Profile:', profileData);
+      setProfile(profileData);
 
-    fetchProgress();
-  }, [navigate]);
+    } catch (err) {
+      console.error('❌ Error fetching progress data:', err.response?.data || err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchProgress();
+}, [navigate]);
 
   const calculateGoalProgress = () => {
     if (!profile) return 0;

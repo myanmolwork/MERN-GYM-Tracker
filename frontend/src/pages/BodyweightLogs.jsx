@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+
+import API from '../utils/api';
 
 const BodyweightLogs = () => {
   const [logs, setLogs] = useState([]);
@@ -8,9 +9,7 @@ const BodyweightLogs = () => {
     const fetchLogs = async () => {
       const token = localStorage.getItem('token');
       try {
-        const res = await axios.get('http://localhost:5000/api/bodyweights', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await API.get('/bodyweights');
         setLogs(res.data);
       } catch (err) {
         console.error('Failed to fetch logs:', err);

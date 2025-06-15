@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+
 import '../BodyweightHistory.css';
+import API from '../utils/api';
+
 const BodyweightHistory = () => {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -8,11 +10,9 @@ const BodyweightHistory = () => {
 
   useEffect(() => {
     const fetchLogs = async () => {
-      const token = localStorage.getItem('token');
+
       try {
-        const response = await axios.get('http://localhost:5000/api/bodyweights', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await API.get('/bodyweights');
         const sorted = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
         setLogs(sorted);
         setError(null);

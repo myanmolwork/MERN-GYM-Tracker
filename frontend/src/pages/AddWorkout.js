@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+
 import '../AddWorkout.css'
+import API from '../utils/api';
 
 const AddWorkout = () => {
   const [date, setDate] = useState('');
@@ -47,7 +48,6 @@ const AddWorkout = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
 
     try {
       await API.post('/workouts', { date, exercises });

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import API from '../utils/api';
 
 ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend);
 
@@ -20,11 +21,9 @@ const BodyweightProgress = () => {
 
   useEffect(() => {
     const fetchLogs = async () => {
-      const token = localStorage.getItem('token');
+
       try {
-        const res = await axios.get('http://localhost:5000/api/bodyweights', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await API.get('/bodyweights');
         const sortedLogs = res.data.sort((a, b) => new Date(a.date) - new Date(b.date));
         setLogs(sortedLogs);
         setError(null);
