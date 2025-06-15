@@ -50,12 +50,7 @@ const AddWorkout = () => {
     const token = localStorage.getItem('token');
 
     try {
-      await axios.post('http://localhost:5000/api/workouts', { date, exercises }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
+      await API.post('/workouts', { date, exercises });
       alert('✅ Workout added successfully!');
       setDate('');
       setExercises([{ name: '', notes: '', sets: [{ reps: '', weight: '' }] }]);
